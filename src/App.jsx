@@ -11,7 +11,7 @@ const themes = ["Light", "Dark"];
 function App() {
   const [printPrimary, setPrintPrimary] = useState("");
   const [printSecondary, setPrintSecondary] = useState("");
-  const [theme, setTheme] = useState(themes[0]);
+  const [theme, setTheme] = useState(themes[1]);
 
   function calculateResult() {
     const operator = operators.find((op) => printPrimary.includes(op));
