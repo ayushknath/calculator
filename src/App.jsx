@@ -80,12 +80,18 @@ function App() {
       setPrintSecondary(`${printPrimary}=`);
       setPrintPrimary(calculateResult(operator));
     } else if (keyChar === nonPrintableChars[1]) {
+      if (printPrimary[printPrimary.length - 1] === ".") {
+        setDecFlag(false);
+      }
+
       setPrintPrimary((prevPrimary) =>
         prevPrimary.slice(0, prevPrimary.length - 1)
       );
     } else if (keyChar === nonPrintableChars[0]) {
       setPrintPrimary("");
       setPrintSecondary("");
+      setNegFlag(false);
+      setDecFlag(false);
     }
   }
 
