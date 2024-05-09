@@ -77,8 +77,12 @@ function App() {
       keyChar === nonPrintableChars[2] &&
       !isNaN(calculateResult(operator))
     ) {
+      let result = calculateResult(operator);
       setPrintSecondary(`${printPrimary}=`);
-      setPrintPrimary(calculateResult(operator));
+      setPrintPrimary(result);
+      if (!result.includes(".")) {
+        setDecFlag(false);
+      }
     } else if (keyChar === nonPrintableChars[1]) {
       if (printPrimary[printPrimary.length - 1] === ".") {
         setDecFlag(false);
