@@ -67,7 +67,7 @@ function App() {
   }
 
   function handleTheme(text) {
-    setTheme(text);
+    setTheme(() => themes.find((t) => t === text));
   }
 
   return (
