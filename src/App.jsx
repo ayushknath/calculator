@@ -26,10 +26,6 @@ function App() {
     const num2 = parseFloat(printPrimary.split(operator)[1]);
     let result;
 
-    console.log(operator);
-    console.log(num1, num2);
-    console.log(printPrimary.split(operator));
-
     switch (operator) {
       case "+":
         result = num1 + num2;
@@ -45,10 +41,12 @@ function App() {
         break;
     }
 
-    // Set Neg flag
     result < 0 && setNegFlag(true);
-
-    return result !== undefined ? result.toString() : undefined;
+    return result !== undefined
+      ? result.toString().includes(".")
+        ? result.toFixed(3)
+        : result.toString()
+      : undefined;
   }
 
   function handleClick(keyChar) {
