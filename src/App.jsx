@@ -9,15 +9,25 @@ const operators = ["+", "-", "*", "/"];
 const themes = ["Light", "Dark"];
 
 function App() {
+  // Display
   const [printPrimary, setPrintPrimary] = useState("");
   const [printSecondary, setPrintSecondary] = useState("");
+  const [operator, setOperator] = useState("");
+
+  // Flags
+  const [negFlag, setNegFlag] = useState(false);
+
+  // Theme
   const [theme, setTheme] = useState(themes[1]);
 
-  function calculateResult() {
-    const operator = operators.find((op) => printPrimary.includes(op));
+  function calculateResult(operator) {
     const num1 = parseFloat(printPrimary.split(operator)[0]);
     const num2 = parseFloat(printPrimary.split(operator)[1]);
     let result;
+
+    console.log(operator);
+    console.log(num1, num2);
+    console.log(printPrimary.split(operator));
 
     switch (operator) {
       case "+":
@@ -34,32 +44,33 @@ function App() {
         break;
     }
 
-    return result.toString();
+    // Set Neg flag
+    result < 0 && setNegFlag(true);
+
+    return result !== undefined ? result.toString() : undefined;
   }
 
   function handleClick(keyChar) {
     if (!nonPrintableChars.some((char) => char === keyChar)) {
       if (!isNaN(parseInt(keyChar))) {
-        setPrintPrimary((prevPrimary) => (prevPrimary += keyChar));
-      } else if (keyChar === "." && !printPrimary.includes(".")) {
-        setPrintPrimary((prevPrimary) => (prevPrimary += keyChar));
-      } else {
-        if (!operators.some((op) => printPrimary.includes(op))) {
-          setPrintPrimary((prevPrimary) => (prevPrimary += keyChar));
-        } else {
-          if (!isNaN(calculateResult())) {
-            setPrintPrimary(calculateResult());
-            setPrintPrimary((prevPrimary) => (prevPrimary += keyChar));
+        setPrintPrimary((prevPrimary) => `${prevPrimary}${keyChar}`);
+      } else if (keyChar === "." && !printPrimary.includes(".") && printPrimary !== "") {
+        setPrintPrimary((prevPrimary) => `${prevPrimary}${keyChar}`);
+      } else if (operators.some((op) => op === keyChar) && printPrimary !== "") {
+          if (!operators.some((op) => printPrimary.includes(op)) || negFlag) {
+            setPrintPrimary((prevPrimary) => `${prevPrimary}${keyChar}`);
           }
-        }
+          else if (!isNaN(calculateResult(operator))) {
+            setPrintPrimary(`${calculateResult(operator)}${keyChar}`);
+          }
+
+          setOperator(keyChar);
       }
-    } else if (keyChar === nonPrintableChars[2] && !isNaN(calculateResult())) {
+    } else if (keyChar === nonPrintableChars[2] && !isNaN(calculateResult(operator))) {
       setPrintSecondary(`${printPrimary}=`);
-      setPrintPrimary(calculateResult());
+      setPrintPrimary(calculateResult(operator));
     } else if (keyChar === nonPrintableChars[1]) {
-      setPrintPrimary((prevPrimary) =>
-        prevPrimary.slice(0, prevPrimary.length - 1)
-      );
+      setPrintPrimary((prevPrimary) => prevPrimary.slice(0, prevPrimary.length - 1));
     } else if (keyChar === nonPrintableChars[0]) {
       setPrintPrimary("");
       setPrintSecondary("");
