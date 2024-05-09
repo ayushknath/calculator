@@ -16,6 +16,7 @@ function App() {
 
   // Flags
   const [negFlag, setNegFlag] = useState(false);
+  const [decFlag, setDecFlag] = useState(false);
 
   // Theme
   const [theme, setTheme] = useState(themes[1]);
@@ -54,12 +55,9 @@ function App() {
     if (!nonPrintableChars.some((char) => char === keyChar)) {
       if (!isNaN(parseInt(keyChar))) {
         setPrintPrimary((prevPrimary) => `${prevPrimary}${keyChar}`);
-      } else if (
-        keyChar === "." &&
-        !printPrimary.includes(".") &&
-        printPrimary !== ""
-      ) {
+      } else if (keyChar === "." && printPrimary !== "" && !decFlag) {
         setPrintPrimary((prevPrimary) => `${prevPrimary}${keyChar}`);
+        setDecFlag(true);
       } else if (operators.some((op) => op === keyChar)) {
         if (printPrimary !== "") {
           if (!operators.some((op) => printPrimary.includes(op)) || negFlag) {
@@ -74,6 +72,8 @@ function App() {
           setPrintPrimary((prevPrimary) => `${prevPrimary}${keyChar}`);
           setNegFlag(true);
         }
+
+        setDecFlag(false);
       }
     } else if (
       keyChar === nonPrintableChars[2] &&
