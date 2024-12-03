@@ -1,5 +1,15 @@
 :root {
-  --fontFamily: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --displaysBorderRadius: 1.75rem;
+  --buttonBorderRadius: 50%;
+  --spanTwoButtonBorderRadius: 10rem;
+  --previousDisplayForegroundColor: #697565;
+  --displaysBackgroundColor: #e2f1e7;
+  --buttonBackgroundColor: #387478;
+  --buttonEqualsBackgroundColor: #629584;
+  --buttonForegroundColor: #fff;
+  --buttonActiveShadowColor: hsl(204, 29%, 5%);
+  --bodyBackgroundColor: #243642;
+  --fontFamily: "Poppins", sans-serif;
 }
 
 *,
@@ -11,13 +21,18 @@
 }
 
 body {
-  font-family: var(--fontFamily);
   overflow: hidden;
+  font-family: var(--fontFamily);
+  background-color: var(--bodyBackgroundColor);
 }
 
 button {
   font-family: inherit;
   font-size: 1.5rem;
+  border: 0;
+  outline: 0;
+  color: var(--buttonForegroundColor);
+  background-color: var(--buttonBackgroundColor);
 }
 
 button:hover {
@@ -38,16 +53,58 @@ button:hover {
 #calculator {
   display: grid;
   grid-template-rows: 10rem 8fr;
+  row-gap: 1rem;
 }
 
 .displays {
   display: grid;
-  grid-template-rows: repeat(2, 1rem);
-  border: 1px solid black;
+  grid-template-rows: 4fr 6fr;
+  align-items: center;
+  border-radius: var(--displaysBorderRadius);
+  background-color: var(--displaysBackgroundColor);
+}
+
+.displays > div {
+  text-align: right;
+  padding-inline: 1rem;
+  padding-block: 0.5rem;
+}
+
+.displays div[data-previous-display] {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--previousDisplayForegroundColor);
+}
+
+.displays div[data-current-display] {
+  font-size: 2rem;
+  font-weight: bold;
 }
 
 .keys {
   display: grid;
   grid-template-columns: repeat(4, 4.5rem);
   grid-template-rows: repeat(5, 4.5rem);
+  gap: 0.5rem;
+}
+
+.keys button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--buttonBorderRadius);
+}
+
+.keys button:active {
+  box-shadow: inset 1px 1px 3px var(--buttonActiveShadowColor),
+    inset -1px -1px 3px var(--buttonActiveShadowColor);
+  transform: scale(0.99);
+}
+
+.keys button.span-two {
+  border-radius: var(--spanTwoButtonBorderRadius);
+}
+
+.keys button[data-equals] {
+  background-color: var(--buttonEqualsBackgroundColor);
 }
