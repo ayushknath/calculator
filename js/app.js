@@ -26,7 +26,7 @@ class Calculator {
   }
 
   appendNumber(number) {
-    if(number === "." && this.currentOperand.toString().includes(".")) return;
+    if((number === "." && this.currentOperand.toString().includes(".")) || this.currentOperand.toString().length === 10) return;
     this.currentOperand = `${this.currentOperand}${number}`;
   }
 
@@ -76,7 +76,6 @@ class Calculator {
     }
     else {
       displayNumber = parseInt(integerPart).toLocaleString("en", { maximumFractionDigits: 0 });
-      console.log(displayNumber);
     }
     if(decimalPart !== undefined) {
       displayNumber = `${displayNumber}.${decimalPart}`;
