@@ -57,14 +57,11 @@ class Calculator {
   }
 
   splitIntegerAndDecimal(number) {
-    let integerPart, decimalPart;
-    if(number.split('.')[0]) {
-      integerPart = number.split('.')[0];
+    let decimalPart;
+    if(number.includes('.')) {
+      return number.split('.');
     }
-    if(number.split('.')[1]) {
-      decimalPart = number.split('.')[1];
-    }
-    return [integerPart, decimalPart];
+    return [number, decimalPart];
   }
 
   formatDisplayNumber(number) {
