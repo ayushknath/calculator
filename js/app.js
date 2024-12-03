@@ -51,24 +51,20 @@ class Calculator {
       default:
         return;
     }
-    this.currentOperand = result;
+    this.currentOperand = result.toString().includes('.') ? result.toFixed(3) : result;
     this.operation = undefined;
     this.previousOperand = "";
   }
 
   splitIntegerAndDecimal(number) {
-    let decimalPart;
-    if(number.includes('.')) {
-      return number.split('.');
-    }
-    return [number, decimalPart];
+    return number.split('.');
   }
 
   formatDisplayNumber(number) {
     const stringNumber = number.toString();
     const [integerPart, decimalPart] = this.splitIntegerAndDecimal(stringNumber);
     let displayNumber;
-    if(isNaN(integerPart)) {
+    if(isNaN(integerPart) || !integerPart) {
       displayNumber = "";
     }
     else {
